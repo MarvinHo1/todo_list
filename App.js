@@ -11,6 +11,7 @@ import TextInputItems from './components/textArea.js';
 import {
   SafeAreaView,
   StyleSheet,
+  FlatList,
   ScrollView,
   View,
   Text,
@@ -26,19 +27,33 @@ const App: () => React$Node = () => {
     { item: 'data', key: '3'}
   ]);
 
+  const newKey = (num) => {
+    console.log(typeof num);
+    let keyNum = Number.parseInt(num, 10);
+    let addKeyNum = keyNum + 1;
+    let result = addKeyNum.toString();
+    return result;
+  }
+
   const addTodoItems = (item) => {
+    let keyValue = `${parseInt(todo[todo.length - 1].key)}`;
     setTodoItems((todo) => {
-      return [
-        {item: item, key: `${parseInt(todo[todo.length - 1].key) + 1}`},
-        ...todo,
-      ];
+      return [{item: item, key: newKey(keyValue)}, ...todo];
     });
   };
+
   {console.log(todo)}
   return (
     <SafeAreaView>
       <View>
         <TextInputItems addTodoItems={addTodoItems} />
+        <FlatList
+          data={todo}
+          renderItem={(allTodo) => {
+            let allItems = allTodo.item.item;
+            return <Text>{allItems}</Text>;
+          }}
+        />
       </View>
     </SafeAreaView>
   );
