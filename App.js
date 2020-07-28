@@ -20,6 +20,7 @@ import {
   Text,
 } from 'react-native';
 // import console = require('console');
+// import console = require('console');
 
 const App: () => React$Node = () => {
   const [toggled, setToggled] = useState(false);
@@ -60,6 +61,16 @@ const App: () => React$Node = () => {
     setToggled(() => !toggled);
   };
 
+  const deleteItem = (key) => {
+    console.log(key, todo)
+    console.log('main page delete function')
+    let newArray = todo.filter(excludeItem => excludeItem.key !== key)
+    setTodoItems(() => {
+      return [...newArray];
+    });
+    setToggled(() => !toggled);
+  }
+
   return (
     <SafeAreaView>
       <View>
@@ -91,6 +102,7 @@ const App: () => React$Node = () => {
               todo={todo}
               selectedKey={selectedKey}
               editItem={editItem}
+              deleteItem={deleteItem}
             />
           </View>
         </View>

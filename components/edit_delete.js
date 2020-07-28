@@ -3,7 +3,7 @@ import {TextInput} from 'react-native';
 
 import {StyleSheet, Button, View} from 'react-native';
 
-const deleteOrEditModal = ({selectedKey, todo, editItem}) => {
+const deleteOrEditModal = ({selectedKey, todo, editItem, deleteItem}) => {
   let keyNum = parseInt(selectedKey, 10);
   let itemMess = todo[keyNum - 1].item;
   const [value, onChangeText] = useState(itemMess);
@@ -17,7 +17,7 @@ const deleteOrEditModal = ({selectedKey, todo, editItem}) => {
       />
       <View style={styles.modalButtonContainer}>
         <Button onPress={() => editItem(value, selectedKey)} title="Edit" />
-        <Button onPress={() => console.log('delete')} title="Delete" />
+        <Button onPress={() => deleteItem(selectedKey)} title="Delete" />
       </View>
     </View>
   );
