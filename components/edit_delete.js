@@ -16,7 +16,7 @@ const deleteOrEditModal = ({selectedKey, todo, editItem}) => {
         value={value}
       />
       <View style={styles.modalButtonContainer}>
-        <Button onPress={() => editItem(value,key)} title="Edit" />
+        <Button onPress={() => editItem(value, selectedKey)} title="Edit" />
         <Button onPress={() => console.log('delete')} title="Delete" />
       </View>
     </View>

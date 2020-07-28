@@ -19,6 +19,7 @@ import {
   View,
   Text,
 } from 'react-native';
+// import console = require('console');
 
 const App: () => React$Node = () => {
   const [toggled, setToggled] = useState(false);
@@ -51,34 +52,37 @@ const App: () => React$Node = () => {
     [toggled],
   );
 
-  const editItem = (newItem) => {
-    let keyValue = `${todo.length}`;
+  const editItem = (newItem, key) => {
+    todo[key - 1].item = newItem;
     setTodoItems(() => {
-      return [...todo, {item: newItem, key: newKey(keyValue)}];
+      return [...todo];
     });
+    setToggled(() => !toggled);
   };
 
   return (
     <SafeAreaView>
       <View>
         <TextInputItems addTodoItems={addTodoItems} />
-        <FlatList
-          data={todo}
-          renderItem={(allTodo) => {
-            let allItems = allTodo.item.item;
-            return (
-              <ScrollView>
-                <TouchableOpacity>
-                  <Text
-                    key={allTodo.item.key}
-                    onPress={() => toggleModal(allTodo.item.key)}>
-                    {allItems}
-                  </Text>
-                </TouchableOpacity>
-              </ScrollView>
-            );
-          }}
-        />
+        <ScrollView>
+          <View>
+            <FlatList
+              data={todo}
+              renderItem={(allTodo) => {
+                let allItems = allTodo.item.item;
+                return (
+                  <TouchableOpacity>
+                    <Text
+                      key={allTodo.item.key}
+                      onPress={() => toggleModal(allTodo.item.key)}>
+                      {allItems}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              }}
+            />
+          </View>
+        </ScrollView>
       </View>
       <Modal transparent={true} visible={toggled}>
         <View style={styles.outerModal}>
