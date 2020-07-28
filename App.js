@@ -62,14 +62,12 @@ const App: () => React$Node = () => {
   };
 
   const deleteItem = (key) => {
-    console.log(key, todo)
-    console.log('main page delete function')
-    let newArray = todo.filter(excludeItem => excludeItem.key !== key)
+    let newArray = todo.filter((excludeItem) => excludeItem.key !== key);
     setTodoItems(() => {
       return [...newArray];
     });
     setToggled(() => !toggled);
-  }
+  };
 
   return (
     <SafeAreaView>

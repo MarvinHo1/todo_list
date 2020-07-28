@@ -1,15 +1,7 @@
-import React, { useState } from 'react';
-import { TextInput } from 'react-native';
+import React, {useState} from 'react';
+import {TextInput} from 'react-native';
 
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  Button,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import {StyleSheet, Button, View} from 'react-native';
 // import console = require('console');
 
 const TextInputItems = ({addTodoItems}) => {

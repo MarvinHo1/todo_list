@@ -4,9 +4,9 @@ import {TextInput} from 'react-native';
 import {StyleSheet, Button, View} from 'react-native';
 
 const deleteOrEditModal = ({selectedKey, todo, editItem, deleteItem}) => {
-  let keyNum = parseInt(selectedKey, 10);
-  let itemMess = todo[keyNum - 1].item;
-  const [value, onChangeText] = useState(itemMess);
+  let itemMess = todo.filter((message) => message.key === selectedKey);
+  let resultMess = itemMess[0].item;
+  const [value, onChangeText] = useState(resultMess);
   return (
     <View>
       <TextInput
