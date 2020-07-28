@@ -2,10 +2,9 @@ import React, {useState} from 'react';
 import {TextInput} from 'react-native';
 
 import {StyleSheet, Button, View} from 'react-native';
-// import console = require('console');
 
 const TextInputItems = ({addTodoItems}) => {
-  const [value, onChangeText] = useState('Test');
+  const [value, onChangeText] = useState('');
   return (
     <View>
       <TextInput

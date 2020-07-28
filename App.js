@@ -71,10 +71,10 @@ const App: () => React$Node = () => {
 
   return (
     <SafeAreaView>
-      <View>
+      <View style={styles.outerContainer}>
         <TextInputItems addTodoItems={addTodoItems} />
         <ScrollView>
-          <View>
+          <View style={styles.itemListContainer}>
             <FlatList
               data={todo}
               renderItem={(allTodo) => {
@@ -82,6 +82,7 @@ const App: () => React$Node = () => {
                 return (
                   <TouchableOpacity>
                     <Text
+                      style={styles.textStyle}
                       key={allTodo.item.key}
                       onPress={() => toggleModal(allTodo.item.key)}>
                       {allItems}
@@ -110,6 +111,11 @@ const App: () => React$Node = () => {
 };
 
 const styles = StyleSheet.create({
+  outerContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
   outerModal: {
     display: 'flex',
     justifyContent: 'center',
@@ -124,6 +130,27 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height: 450,
     width: 350,
+  },
+
+  itemListContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 25,
+    width: '100%',
+  },
+
+  textStyle: {
+    flex: 1,
+    // alignItems: 'center',
+    width: 400,
+    height: 40,
+    textAlign: 'center',
+    marginTop: 10,
+    fontSize: 25,
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderRadius: 5,
   },
 });
 
