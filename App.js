@@ -6,8 +6,9 @@
  * @flow strict-local
  */
 
-import React, { useState } from 'react';
+import React, {useState, useCallback} from 'react';
 import TextInputItems from './components/textArea.js';
+import DeleteOrEditModal from './components/edit_delete.js';
 import {
   SafeAreaView,
   StyleSheet,
@@ -17,23 +18,16 @@ import {
   Modal,
   View,
   Text,
-  StatusBar,
 } from 'react-native';
-// import console = require('console');
-
-// import console = require('console');
 
 const App: () => React$Node = () => {
-  const [todo, setTodoItems] = useState(
-    [
-      {item: 'Hello', key: '1'},
-      {item: 'example', key: '2'},
-      {item: 'data', key: '3'},
-    ],
-    true,
-  );
-
   const [toggled, setToggled] = useState(false);
+  const [selectedKey, setSelectedKey] = useState('');
+  const [todo, setTodoItems] = useState([
+    {item: 'Hello', key: '1'},
+    {item: 'example', key: '2'},
+    {item: 'data', key: '3'},
+  ]);
 
   const newKey = (num) => {
     let keyNum = Number.parseInt(num, 10);
@@ -44,14 +38,25 @@ const App: () => React$Node = () => {
 
   const addTodoItems = (item) => {
     let keyValue = `${todo.length}`;
-    setTodoItems((todo) => {
-      return [{item: item, key: newKey(keyValue)}, ...todo];
+    setTodoItems(() => {
+      return [...todo, {item: item, key: newKey(keyValue)}];
     });
   };
 
-  const toggleModal = () => {
-    setToggled((toggled) => !toggled);
-  }
+  const toggleModal = useCallback(
+    (key) => {
+      setToggled(() => !toggled);
+      setSelectedKey(key);
+    },
+    [toggled],
+  );
+
+  const editItem = (newItem) => {
+    let keyValue = `${todo.length}`;
+    setTodoItems(() => {
+      return [...todo, {item: newItem, key: newKey(keyValue)}];
+    });
+  };
 
   return (
     <SafeAreaView>
@@ -62,9 +67,15 @@ const App: () => React$Node = () => {
           renderItem={(allTodo) => {
             let allItems = allTodo.item.item;
             return (
-              <TouchableOpacity onPress={toggleModal}>
-                <Text>{allItems}</Text>
-              </TouchableOpacity>
+              <ScrollView>
+                <TouchableOpacity>
+                  <Text
+                    key={allTodo.item.key}
+                    onPress={() => toggleModal(allTodo.item.key)}>
+                    {allItems}
+                  </Text>
+                </TouchableOpacity>
+              </ScrollView>
             );
           }}
         />
@@ -72,7 +83,11 @@ const App: () => React$Node = () => {
       <Modal transparent={true} visible={toggled}>
         <View style={styles.outerModal}>
           <View style={styles.modal}>
-            <Text>Modal</Text>
+            <DeleteOrEditModal
+              todo={todo}
+              selectedKey={selectedKey}
+              editItem={editItem}
+            />
           </View>
         </View>
       </Modal>
@@ -82,15 +97,19 @@ const App: () => React$Node = () => {
 
 const styles = StyleSheet.create({
   outerModal: {
-    backgroundColor: 'transparent',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
     flex: 1,
   },
   modal: {
     backgroundColor: 'cyan',
-    margin: 50,
+    margin: 100,
     padding: 40,
     borderRadius: 10,
-    flex: 1,
+    height: 450,
+    width: 350,
   },
 });
 

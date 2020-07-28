@@ -17,12 +17,12 @@ const TextInputItems = ({addTodoItems}) => {
   return (
     <View>
       <TextInput
-        style={styles.TextInput}
+        style={styles.textInput}
         placeholder="todos"
         onChangeText={(text) => onChangeText(text)}
         value={value}
       />
-      <Button onPress={() => addTodoItems(value)} title = 'add items'/>
+      <Button onPress={() => addTodoItems(value)} title="add items" />
     </View>
   );
 };
