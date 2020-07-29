@@ -38,6 +38,7 @@ const App: () => React$Node = () => {
     return result;
   };
 
+  // Never initialize functions without useCallback
   const addTodoItems = (item) => {
     let keyValue = `${todo.length}`;
     setTodoItems(() => {
@@ -54,8 +55,10 @@ const App: () => React$Node = () => {
   );
 
   const editItem = (newItem, key) => {
+    // This is immutable, you are not suposed to do that
     todo[key - 1].item = newItem;
     setTodoItems(() => {
+      // Set the new item here
       return [...todo];
     });
     setToggled(() => !toggled);
@@ -78,6 +81,7 @@ const App: () => React$Node = () => {
             <FlatList
               data={todo}
               renderItem={(allTodo) => {
+                // item.item is redundant
                 let allItems = allTodo.item.item;
                 return (
                   <TouchableOpacity>
@@ -93,6 +97,7 @@ const App: () => React$Node = () => {
           </View>
         </ScrollView>
       </View>
+      // no need for ={true}
       <Modal transparent={true} visible={toggled}>
         <View style={styles.outerModal}>
           <View style={styles.modal}>

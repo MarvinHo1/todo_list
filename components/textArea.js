@@ -1,9 +1,11 @@
+// Either you use camelCase or snake_case for file names. You cannot mix them
 import React, {useState} from 'react';
 import {TextInput} from 'react-native';
 
 import {StyleSheet, Button, View} from 'react-native';
 // import console = require('console');
 
+// textArea.js doesn't match the component name
 const TextInputItems = ({addTodoItems}) => {
   const [value, onChangeText] = useState('Test');
   return (
