@@ -21,6 +21,7 @@ const TextInputItems = ({addTodoItems}) => {
 const styles = StyleSheet.create({
   textInput: {
     marginTop: 20,
+    width: '100%',
     height: 50,
     borderColor: 'gray',
     borderWidth: 1,

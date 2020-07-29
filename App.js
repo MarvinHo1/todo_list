@@ -21,27 +21,27 @@ import {
 } from 'react-native';
 // import console = require('console');
 // import console = require('console');
+// import console = require('console');
 
 const App: () => React$Node = () => {
   const [toggled, setToggled] = useState(false);
   const [selectedKey, setSelectedKey] = useState('');
+  const [count, setCount] = useState(0);
   const [todo, setTodoItems] = useState([
-    {item: 'Hello', key: '1'},
-    {item: 'example', key: '2'},
-    {item: 'data', key: '3'},
+    // {item: 'Hello', key: '1'},
+    // {item: 'example', key: '2'},
+    // {item: 'data', key: '3'},
   ]);
 
-  const newKey = (num) => {
-    let keyNum = Number.parseInt(num, 10);
-    let addKeyNum = keyNum + 1;
-    let result = addKeyNum.toString();
-    return result;
+  const newKey = () => {
+    setCount(count + 1);
+    return count.toString();
   };
 
   const addTodoItems = (item) => {
-    let keyValue = `${todo.length}`;
+    // let keyValue = `${todo.length}`;
     setTodoItems(() => {
-      return [...todo, {item: item, key: newKey(keyValue)}];
+      return [...todo, {item: item, key: newKey(count)}];
     });
   };
 
@@ -76,6 +76,7 @@ const App: () => React$Node = () => {
         <ScrollView>
           <View style={styles.itemListContainer}>
             <FlatList
+              style={styles.flateListContainer}
               data={todo}
               renderItem={(allTodo) => {
                 let allItems = allTodo.item.item;
@@ -115,6 +116,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     textAlign: 'center',
+    width: '100%',
   },
   outerModal: {
     display: 'flex',
@@ -139,11 +141,11 @@ const styles = StyleSheet.create({
     marginTop: 25,
     width: '100%',
   },
-
+  flateListContainer: {
+    width: '100%',
+  },
   textStyle: {
-    flex: 1,
-    // alignItems: 'center',
-    width: 400,
+    width: '100%',
     height: 40,
     textAlign: 'center',
     marginTop: 10,
