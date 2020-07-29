@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import {TextInput} from 'react-native';
-
+// Merge into a single import
 import {StyleSheet, Button, View} from 'react-native';
 
+// Has to be Capital, otherwise JSX might think this is a string
 const deleteOrEditModal = ({selectedKey, todo, editItem, deleteItem}) => {
+  // useMemo()
   let itemMess = todo.filter((message) => message.key === selectedKey);
+  // sometimes you use const and sometimes you use let, be consistent
   let resultMess = itemMess[0].item;
   const [value, onChangeText] = useState(resultMess);
   return (
