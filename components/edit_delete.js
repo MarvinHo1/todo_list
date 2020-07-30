@@ -3,7 +3,13 @@ import {TextInput} from 'react-native';
 
 import {StyleSheet, Button, View} from 'react-native';
 
-const deleteOrEditModal = ({selectedKey, todo, editItem, deleteItem}) => {
+const deleteOrEditModal = ({
+  selectedKey,
+  todo,
+  editItem,
+  deleteItem,
+  completeTask,
+}) => {
   let itemMess = todo.filter((message) => message.key === selectedKey);
   let resultMess = itemMess[0].item;
   const [value, onChangeText] = useState(resultMess);
@@ -18,6 +24,7 @@ const deleteOrEditModal = ({selectedKey, todo, editItem, deleteItem}) => {
       <View style={styles.modalButtonContainer}>
         <Button onPress={() => editItem(value, selectedKey)} title="Edit" />
         <Button onPress={() => deleteItem(selectedKey)} title="Delete" />
+        <Button onPress={() => completeTask(selectedKey)} title="Complete" />
       </View>
     </View>
   );

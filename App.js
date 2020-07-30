@@ -20,8 +20,6 @@ import {
   Text,
 } from 'react-native';
 // import console = require('console');
-// import console = require('console');
-// import console = require('console');
 
 const App: () => React$Node = () => {
   const [toggled, setToggled] = useState(false);
@@ -39,9 +37,11 @@ const App: () => React$Node = () => {
   };
 
   const addTodoItems = (item) => {
-    // let keyValue = `${todo.length}`;
     setTodoItems(() => {
-      return [...todo, {item: item, key: newKey(count)}];
+      return [
+        ...todo,
+        {item: item, key: newKey(count), backgroundColor: 'transparent'},
+      ];
     });
   };
 
@@ -69,6 +69,19 @@ const App: () => React$Node = () => {
     setToggled(() => !toggled);
   };
 
+  const completeTask = (key) => {
+    todo[key].backgroundColor = 'green';
+    setTodoItems(() => {
+      return [...todo];
+    });
+    setToggled(() => !toggled);
+  };
+
+  const changeColor = (key, lol) => {
+    // console.log(todo[key].backgroundColor, key)
+    return todo[key].backgroundColor
+  }
+
   return (
     <SafeAreaView>
       <View style={styles.outerContainer}>
@@ -78,12 +91,13 @@ const App: () => React$Node = () => {
             <FlatList
               style={styles.flateListContainer}
               data={todo}
-              renderItem={(allTodo) => {
+              renderItem={(allTodo, index) => {
+                console.log(allTodo.index, 'lol')
                 let allItems = allTodo.item.item;
                 return (
                   <TouchableOpacity>
                     <Text
-                      style={styles.textStyle}
+                      style={[styles.textStyle, {backgroundColor: changeColor(allTodo.index)}]}
                       key={allTodo.item.key}
                       onPress={() => toggleModal(allTodo.item.key)}>
                       {allItems}
@@ -103,6 +117,7 @@ const App: () => React$Node = () => {
               selectedKey={selectedKey}
               editItem={editItem}
               deleteItem={deleteItem}
+              completeTask={completeTask}
             />
           </View>
         </View>
