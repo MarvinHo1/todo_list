@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useRef} from 'react';
 import TextInputItems from './components/textArea.js';
 import DeleteOrEditModal from './components/edit_delete.js';
 import {
@@ -20,16 +20,15 @@ import {
   Text,
 } from 'react-native';
 // import console = require('console');
+// import console = require('console');
+// import console = require('console');
 
 const App: () => React$Node = () => {
   const [toggled, setToggled] = useState(false);
   const [selectedKey, setSelectedKey] = useState('');
   const [count, setCount] = useState(0);
-  const [todo, setTodoItems] = useState([
-    // {item: 'Hello', key: '1'},
-    // {item: 'example', key: '2'},
-    // {item: 'data', key: '3'},
-  ]);
+  const [todo, setTodoItems] = useState([]);
+  const trackEle = useRef();
 
   const newKey = () => {
     setCount(count + 1);
@@ -54,7 +53,7 @@ const App: () => React$Node = () => {
   );
 
   const editItem = (newItem, key) => {
-    todo[key - 1].item = newItem;
+    todo[key].item = newItem;
     setTodoItems(() => {
       return [...todo];
     });
@@ -69,7 +68,7 @@ const App: () => React$Node = () => {
     setToggled(() => !toggled);
   };
 
-  const completeTask = (key) => {
+  const completeTask = (key, value) => {
     todo[key].backgroundColor = 'green';
     setTodoItems(() => {
       return [...todo];
@@ -77,10 +76,11 @@ const App: () => React$Node = () => {
     setToggled(() => !toggled);
   };
 
-  const changeColor = (key, lol) => {
-    // console.log(todo[key].backgroundColor, key)
-    return todo[key].backgroundColor
-  }
+  const changeColor = (key, allitems) => {
+    return todo[key].backgroundColor === undefined
+      ? 'green'
+      : todo[key].backgroundColor;
+  };
 
   return (
     <SafeAreaView>
@@ -91,14 +91,22 @@ const App: () => React$Node = () => {
             <FlatList
               style={styles.flateListContainer}
               data={todo}
-              renderItem={(allTodo, index) => {
-                console.log(allTodo.index, 'lol')
+              renderItem={(allTodo) => {
                 let allItems = allTodo.item.item;
                 return (
                   <TouchableOpacity>
                     <Text
-                      style={[styles.textStyle, {backgroundColor: changeColor(allTodo.index)}]}
-                      key={allTodo.item.key}
+                      style={[
+                        styles.textStyle,
+                        {
+                          backgroundColor: changeColor(
+                            allTodo.item.key,
+                            allItems,
+                          ),
+                        },
+                      ]}
+                      ref={trackEle}
+                      key={count}
                       onPress={() => toggleModal(allTodo.item.key)}>
                       {allItems}
                     </Text>
